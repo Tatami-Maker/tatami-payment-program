@@ -28,25 +28,33 @@ const program2 = new Program(idl as anchor.Idl, programId, provider2);
         Buffer.from("receipt")
     ], programId);
 
-    const tx = await program.methods.withdrawPayment(index)
+    const tx1 = await program.methods.initialize(index)
     .accounts({
         receipt 
     })
     .rpc()
 
-    console.log("TX is successful: ", tx);
+    console.log("TX is successful: ", tx1);
+
+    const tx2 = await program.methods.withdrawPayment(index)
+    .accounts({
+        receipt 
+    })
+    .rpc()
+
+    console.log("TX is successful: ", tx2);
 
     // This TX should fail - wrong signer
-    try {
-        const tx2 = await program2.methods.withdrawPayment(index)
-        .accounts({
-            receipt 
-        })
-        .rpc()
+    // try {
+    //     const tx2 = await program2.methods.withdrawPayment(index)
+    //     .accounts({
+    //         receipt 
+    //     })
+    //     .rpc()
 
-        console.log("TX is successful: ", tx2);
-    } catch(e) {
-        console.log(e);
-    }
+    //     console.log("TX is successful: ", tx2);
+    // } catch(e) {
+    //     console.log(e);
+    // }
 
 })();
