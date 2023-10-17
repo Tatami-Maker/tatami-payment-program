@@ -28,13 +28,13 @@ const program2 = new Program(idl as anchor.Idl, programId, provider2);
         Buffer.from("receipt")
     ], programId);
 
-    const tx1 = await program.methods.initialize(index)
-    .accounts({
-        receipt 
-    })
-    .rpc()
+    // const tx1 = await program.methods.initialize(index)
+    // .accounts({
+    //     receipt 
+    // })
+    // .rpc()
 
-    console.log("TX is successful: ", tx1);
+    // console.log("TX is successful: ", tx1);
 
     const tx2 = await program.methods.withdrawPayment(index)
     .accounts({

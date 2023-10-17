@@ -15,10 +15,10 @@ pub mod tatami_program {
     }
 
     pub fn withdraw_payment(ctx: Context<Withdraw>, _index: u64) -> Result<()> {
-        let balance = ctx.accounts.receipt.lamports();
+        let balance = ctx.accounts.receipt.get_lamports();
 
-        **ctx.accounts.receipt.to_account_info().try_borrow_mut_lamports()? -= balance;
-        **ctx.accounts.signer.to_account_info().try_borrow_mut_lamports()? -= balance;
+        ctx.accounts.receipt.sub_lamports(balance)?;
+        ctx.accounts.signer.add_lamports(balance)?;
         Ok(())
     }
 }
@@ -58,7 +58,7 @@ pub struct Withdraw<'info> {
         ],
         bump
     )]
-    pub receipt: SystemAccount<'info>,
+    pub receipt: Account<'info, Receipt>,
 
     #[account(
         mut,
